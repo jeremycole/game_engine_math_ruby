@@ -93,4 +93,23 @@ RSpec.describe GameEngineMath::Matrix3D do
     expect(Matrix3D::SAMPLE_A.transpose.determinant)
       .to be_close_to(Matrix3D::SAMPLE_A.determinant)
   end
+
+  it 'can determine zero?' do
+    expect(Matrix3D::SAMPLE_A.zero?).to be false
+    expect(Matrix3D::ZERO.zero?).to be true
+  end
+
+  it 'can determine symmetric?' do
+    expect(Matrix3D::SAMPLE_A.symmetric?).to be false
+    expect(Matrix3D::SAMPLE_B.symmetric?).to be false
+    expect(Matrix3D::SAMPLE_C.symmetric?).to be true
+    expect(Matrix3D::SAMPLE_D.symmetric?).to be false
+  end
+
+  it 'can determine skew_symmetric?' do
+    expect(Matrix3D::SAMPLE_A.skew_symmetric?).to be false
+    expect(Matrix3D::SAMPLE_B.skew_symmetric?).to be false
+    expect(Matrix3D::SAMPLE_C.skew_symmetric?).to be false
+    expect(Matrix3D::SAMPLE_D.skew_symmetric?).to be true
+  end
 end

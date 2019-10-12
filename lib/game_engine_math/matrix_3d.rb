@@ -192,5 +192,19 @@ module GameEngineMath
       b: { x: 3, y: 2, z: 1 },
       c: { x: 1, y: 3, z: 2 }
     })
+
+    # Symmetric.
+    SAMPLE_C = Matrix3D.from_h({
+      a: { x: 1, y: 3, z: 1 },
+      b: { x: 3, y: 2, z: 3 },
+      c: { x: 1, y: 3, z: 2 }
+    })
+
+    # Skew symmetric.
+    SAMPLE_D = Matrix3D.from_h({
+      a: { x: 1,  y: -3, z: 1 },
+      b: { x: 3,  y: 2,  z: 5 },
+      c: { x: -1, y: -5, z: 2 }
+    })
   end
 end
