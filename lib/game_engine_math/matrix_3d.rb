@@ -85,6 +85,33 @@ module GameEngineMath
       @xy ||= x.cross(y)
     end
 
+    def +(o)
+      case o
+      when Matrix3D
+        Matrix3D.new(
+          Vector3D.new(a.x+o.a.x, a.y+o.a.y, a.z+o.a.z),
+          Vector3D.new(b.x+o.b.x, b.y+o.b.y, b.z+o.b.z),
+          Vector3D.new(c.x+o.c.x, c.y+o.c.y, c.z+o.c.z)
+        )
+      else
+        raise ArgumentError.new("Unknown type #{o.class} applying + to #{self}")
+      end
+    end
+
+    def -(o)
+      case o
+      when Matrix3D
+        Matrix3D.new(
+          Vector3D.new(a.x-o.a.x, a.y-o.a.y, a.z-o.a.z),
+          Vector3D.new(b.x-o.b.x, b.y-o.b.y, b.z-o.b.z),
+          Vector3D.new(c.x-o.c.x, c.y-o.c.y, c.z-o.c.z)
+        )
+      else
+        raise ArgumentError.new("Unknown type #{o.class} applying - to #{self}")
+      end
+    end
+
+
     def *(o)
       case o
       when Float, Integer, Rational
