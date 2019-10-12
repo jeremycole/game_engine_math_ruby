@@ -88,5 +88,9 @@ module GameEngineMath
     def reject(v)
       self - project(v)
     end
+
+    def zero?
+      x.zero? && y.zero? && z.zero?
+    end
   end
 end

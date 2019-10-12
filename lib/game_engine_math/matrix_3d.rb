@@ -157,6 +157,28 @@ module GameEngineMath
       Matrix3D.new(x, y, z)
     end
 
+    def trace
+      a.x + b.y + c.z
+    end
+
+    def zero?
+      a.zero? && b.zero? && c.zero?
+    end
+
+    def diagonal?
+      a.y.zero? && a.z.zero? && b.x.zero? && b.z.zero? && c.x.zero? && x.y.zero?
+    end
+
+    def symmetric?
+      a.y == b.x && a.z == c.x && b.z == c.y
+    end
+
+    def skew_symmetric?
+      a.y == -b.x && a.z == -c.x && b.z == -c.y
+    end
+
+    ZERO = Matrix3D.new
+
     IDENTITY = diagonal(1)
 
     SAMPLE_A = Matrix3D.from_h({
