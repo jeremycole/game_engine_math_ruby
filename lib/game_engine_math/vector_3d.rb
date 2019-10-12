@@ -20,6 +20,10 @@ module GameEngineMath
       {x: x, y: y, z: z}
     end
 
+    def ==(o)
+      x == o.x && y == o.y && z == o.z
+    end
+
     def send_componentwise(op, xx, yy=nil, zz=nil)
       Vector3D.new(x.send(op, xx), y.send(op, yy || xx), z.send(op, zz || xx))
     end

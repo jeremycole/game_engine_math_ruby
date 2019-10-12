@@ -37,6 +37,10 @@ module GameEngineMath
       { a: a.to_h, b: b.to_h, c: c.to_h }
     end
 
+    def ==(o)
+      a == o.a && b == o.b && c == o.c
+    end
+
     def m(i, j)
       [
         [a.x, a.y, a.z],
