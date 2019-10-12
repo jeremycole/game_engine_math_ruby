@@ -10,6 +10,14 @@ module GameEngineMath
       Matrix3D.new(a, b, c)
     end
 
+    def self.fill(i)
+      Matrix3D.new(
+        Vector3D.new(i, i, i),
+        Vector3D.new(i, i, i),
+        Vector3D.new(i, i, i)
+      )
+    end
+
     def self.diagonal(i)
       Matrix3D.new(
         Vector3D.new(i, 0, 0),
