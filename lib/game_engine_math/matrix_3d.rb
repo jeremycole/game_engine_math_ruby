@@ -90,7 +90,7 @@ module GameEngineMath
           Vector3D.new(x.dot(o.c), y.dot(o.c), z.dot(o.c))
         )
       else
-        raise ArgumentError("Unknown type #{o.class} applying #{op} to #{self}")
+        raise ArgumentError.new("Unknown type #{o.class} applying * to #{self}")
       end
     end
 

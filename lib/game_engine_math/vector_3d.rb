@@ -35,7 +35,7 @@ module GameEngineMath
       when Vector3D
         send_componentwise(op, o.x, o.y, o.z)
       else
-        raise ArgumentError("Unknown type #{o.class} applying #{op} to #{self}")
+        raise ArgumentError.new("Unknown type #{o.class} applying #{op} to #{self}")
       end
     end
 
