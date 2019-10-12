@@ -2,14 +2,14 @@ module GameEngineMath
   class Vector3D
     attr_accessor :x, :y, :z
 
-    def self.from_h(x:0.0, y:0.0, z:0.0)
+    def self.from_h(x:'0', y:'0', z:'0')
       Vector3D.new(x, y, z)
     end
 
-    def initialize(x=0.0, y=0.0, z=0.0)
-      self.x = x.to_f
-      self.y = y.to_f
-      self.z = z.to_f
+    def initialize(x='0', y='0', z='0')
+      self.x = Rational(x)
+      self.y = Rational(y)
+      self.z = Rational(z)
     end
 
     def to_a
@@ -26,7 +26,7 @@ module GameEngineMath
 
     def op_other(o, op)
       case o
-      when Float, Integer
+      when Float, Integer, Rational
         send_componentwise(op, o)
       when Vector3D
         send_componentwise(op, o.x, o.y, o.z)
@@ -64,7 +64,7 @@ module GameEngineMath
     end
 
     def magnitude
-      Math.sqrt(square);
+      Rational(Math.sqrt(square))
     end
 
     def normalize

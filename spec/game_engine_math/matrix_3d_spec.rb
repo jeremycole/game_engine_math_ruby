@@ -11,15 +11,15 @@ RSpec.describe GameEngineMath::Matrix3D do
       Vector3D.new(7, 8, 9)
     )
 
-    expect(m.a.x).to be_close_to(1.0)
-    expect(m.a.y).to be_close_to(2.0)
-    expect(m.a.z).to be_close_to(3.0)
-    expect(m.b.x).to be_close_to(4.0)
-    expect(m.b.y).to be_close_to(5.0)
-    expect(m.b.z).to be_close_to(6.0)
-    expect(m.c.x).to be_close_to(7.0)
-    expect(m.c.y).to be_close_to(8.0)
-    expect(m.c.z).to be_close_to(9.0)
+    expect(m.a.x).to eq(1)
+    expect(m.a.y).to eq(2)
+    expect(m.a.z).to eq(3)
+    expect(m.b.x).to eq(4)
+    expect(m.b.y).to eq(5)
+    expect(m.b.z).to eq(6)
+    expect(m.c.x).to eq(7)
+    expect(m.c.y).to eq(8)
+    expect(m.c.z).to eq(9)
   end
 
   it 'can instantiate an object using from_h' do
@@ -29,15 +29,15 @@ RSpec.describe GameEngineMath::Matrix3D do
       c: { x: 7, y: 8, z: 9 }
     })
 
-    expect(m.a.x).to be_close_to(1.0)
-    expect(m.a.y).to be_close_to(2.0)
-    expect(m.a.z).to be_close_to(3.0)
-    expect(m.b.x).to be_close_to(4.0)
-    expect(m.b.y).to be_close_to(5.0)
-    expect(m.b.z).to be_close_to(6.0)
-    expect(m.c.x).to be_close_to(7.0)
-    expect(m.c.y).to be_close_to(8.0)
-    expect(m.c.z).to be_close_to(9.0)
+    expect(m.a.x).to eq(1)
+    expect(m.a.y).to eq(2)
+    expect(m.a.z).to eq(3)
+    expect(m.b.x).to eq(4)
+    expect(m.b.y).to eq(5)
+    expect(m.b.z).to eq(6)
+    expect(m.c.x).to eq(7)
+    expect(m.c.y).to eq(8)
+    expect(m.c.z).to eq(9)
   end
 
   it 'can perform vector multiplication' do
@@ -45,11 +45,11 @@ RSpec.describe GameEngineMath::Matrix3D do
     v = Vector3D.new(10, 11, 12)
     r = m * v
 
-    expect(r).to eq_a_Vector3D(Vector3D.from_h(x: 138, y: 99, z: 204))
+    expect(r).to eq(Vector3D.from_h(x: 138, y: 99, z: 204))
   end
 
   it 'can perform matrix multiplication' do
-    expect(Matrix3D::SAMPLE_A * Matrix3D::SAMPLE_B).to eq_a_Matrix3D(Matrix3D.from_h({
+    expect(Matrix3D::SAMPLE_A * Matrix3D::SAMPLE_B).to eq(Matrix3D.from_h({
       a: { x: 30, y: 18, z: 42},
       b: { x: 18, y: 18, z: 30},
       c: { x: 27, y: 21, z: 39},
@@ -57,19 +57,19 @@ RSpec.describe GameEngineMath::Matrix3D do
   end
 
   it 'can calculate the determinant' do
-    expect(Matrix3D::SAMPLE_A.determinant).to be_close_to(-36)
+    expect(Matrix3D::SAMPLE_A.determinant).to eq(-36r)
   end
 
   it 'can invert a matrix' do
-    expect(Matrix3D::SAMPLE_A.inverse).to eq_a_Matrix3D(Matrix3D.from_h({
-      a: { x: -11.0 / 12.0, y:  1.0 / 3.0, z:  1.0 / 12.0 },
-      b: { x:  -1.0 /  6.0, y:  1.0 / 3.0, z: -1.0 /  6.0 },
-      c: { x:   3.0 /  4.0, y: -1.0 / 3.0, z:  1.0 / 12.0 },
+    expect(Matrix3D::SAMPLE_A.inverse).to eq(Matrix3D.from_h({
+      a: { x: -11/12r, y: 1/3r,  z: 1/12r },
+      b: { x: -1/6r,   y: 1/3r,  z: -1/6r },
+      c: { x: 3/4r,    y: -1/3r, z: 1/12r },
     }))
   end
 
   it 'expresses the determinant of the identity' do
-    expect(Matrix3D::IDENTITY.determinant).to be_close_to(1)
+    expect(Matrix3D::IDENTITY.determinant).to eq(1)
   end
 
   it 'expresses the product rule for the determinant' do
@@ -79,14 +79,14 @@ RSpec.describe GameEngineMath::Matrix3D do
 
   it 'expresses the determinant of an inverse matrix' do
     expect(Matrix3D::SAMPLE_A.inverse.determinant)
-      .to be_close_to(1.0 / Matrix3D::SAMPLE_A.determinant)
+      .to eq(1r / Matrix3D::SAMPLE_A.determinant)
   end
 
   it 'expresses scalar factorization for the determinant' do
-    expect((Matrix3D::SAMPLE_A * 7.0).determinant)
-      .to be_close_to((7.0 ** 3) * Matrix3D::SAMPLE_A.determinant)
-    expect((Matrix3D::SAMPLE_B * 2.0).determinant)
-      .to be_close_to((2.0 ** 3) * Matrix3D::SAMPLE_B.determinant)
+    expect((Matrix3D::SAMPLE_A * 7r).determinant)
+      .to be_close_to((7r ** 3) * Matrix3D::SAMPLE_A.determinant)
+    expect((Matrix3D::SAMPLE_B * 2r).determinant)
+      .to be_close_to((2r ** 3) * Matrix3D::SAMPLE_B.determinant)
   end
 
   it 'expresses transpose symmetry for the determinant' do

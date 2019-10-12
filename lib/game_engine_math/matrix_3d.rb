@@ -75,8 +75,8 @@ module GameEngineMath
 
     def *(o)
       case o
-      when Float, Integer
-        self * Matrix3D.diagonal(o.to_f)
+      when Float, Integer, Rational
+        self * Matrix3D.diagonal(o)
       when Vector3D
         Vector3D.new(x.dot(o), y.dot(o), z.dot(o))
       when Matrix3D
@@ -98,8 +98,14 @@ module GameEngineMath
       i - j + k
     end
 
+    def invertible?
+      determinant != 0r
+    end
+
     def inverse
-      id = 1.0 / determinant
+      return nil unless invertible?
+
+      id = 1r / determinant
 
       Matrix3D.from_h({
         a: { x: yz.x * id, y: yz.y * id, z: yz.z * id },
