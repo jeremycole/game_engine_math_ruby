@@ -135,7 +135,7 @@ module GameEngineMath
       result = self
 
       rotations.each do |axis, angle|
-        result = rotate_around_axis(axis, angle) * result
+        result = Vector3D::rotate_around_axis(axis, angle) * result
       end
 
       result
