@@ -161,4 +161,17 @@ RSpec.describe GameEngineMath::Vector3D do
 
     expect(b.cross(a.cross(b)) / b.square).to eq a.reject(b)
   end
+
+  it 'can rotate a vector back to itself' do
+    a = Vector3D.new(1, 2, 3)
+
+    expect(a.rotate(x: Math::PI*2, y: Math::PI*2, z: Math::PI*2)).to eq_a_Vector3D(a)
+  end
+
+  it 'can rotate a vector about an arbitrary axis' do
+    a = Vector3D.new(1, 1, 1)
+
+    expect(a.rotate(Vector3D.new(1, 1, 0) => Math::PI))
+      .to eq_a_Vector3D(Vector3D.new(1, 1, -1))
+  end
 end

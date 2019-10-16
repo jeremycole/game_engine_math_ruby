@@ -98,6 +98,49 @@ module GameEngineMath
       self - project(v)
     end
 
+    def self.rotate_around_axis(axis, angle)
+      case axis
+      when Symbol
+        raise ArgumentError.new("Unknown axis #{axis}") unless [:x, :y, :z].include?(axis)
+
+        axis = Vector3D.from_h({ axis => 1 })
+      when Hash
+        axis = Vector3D.from_h(axis).normalize
+      when Vector3D
+        axis = axis.normalize
+      else
+        raise ArgumentError.new("Unknown axis type #{axis.class}")
+      end
+
+      cos = Math.cos(angle)
+      sin = Math.sin(angle)
+      cos_d = 1.0 - cos
+
+      rx = axis.x * cos_d
+      ry = axis.y * cos_d
+      rz = axis.z * cos_d
+
+      axay = rx * axis.y
+      axaz = rx * axis.z
+      ayaz = ry * axis.z
+
+      Matrix3D.from_h({
+        a: { x:  cos +  rx * axis.x, y: axay - sin * axis.z, z: axaz + sin * axis.y },
+        b: { x: axay + sin * axis.z, y:  cos +  ry * axis.y, z: ayaz - sin * axis.x },
+        c: { x: axaz - sin * axis.y, y: ayaz + sin * axis.x, z:  cos +  rz * axis.z }
+      })
+    end
+
+    def rotate(rotations)
+      result = self
+
+      rotations.each do |axis, angle|
+        result = rotate_around_axis(axis, angle) * result
+      end
+
+      result
+    end
+
     def zero?
       x.zero? && y.zero? && z.zero?
     end
