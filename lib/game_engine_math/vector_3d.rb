@@ -12,6 +12,15 @@ module GameEngineMath
       self.z = Rational(z)
     end
 
+    def to_s
+      [
+        '%1s %6s' % [' ', 'v  '],
+        '%1s %6.2f' % ['x', x],
+        '%1s %6.2f' % ['y', y],
+        '%1s %6.2f' % ['z', z],
+      ].join("\n")
+    end
+
     def to_a
       [x, y, z]
     end
