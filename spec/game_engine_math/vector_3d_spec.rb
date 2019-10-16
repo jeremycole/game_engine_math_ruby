@@ -144,4 +144,21 @@ RSpec.describe GameEngineMath::Vector3D do
     expect(p.magnitude).to be_close_to(Math.sin((Math::PI / 180) * 45))
     expect(r.magnitude).to be_close_to(Math.sin((Math::PI / 180) * 45))
   end
+
+  it 'expresses the Jacobi identity' do
+    a = Vector3D.new(1, 2, 3)
+    b = Vector3D.new(4, 5, 6)
+    c = Vector3D.new(7, 8, 9)
+
+    r = a.cross(b.cross(c)) + b.cross(c.cross(a)) + c.cross(a.cross(b))
+
+    expect(r.zero?).to be true
+  end
+
+  it 'can calculate the rejection via cross product' do
+    a = Vector3D.new(1, 2, 3)
+    b = Vector3D.new(4, 5, 6)
+
+    expect(b.cross(a.cross(b)) / b.square).to eq a.reject(b)
+  end
 end
