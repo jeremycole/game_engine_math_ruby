@@ -18,11 +18,11 @@ module GameEngineMath
       )
     end
 
-    def self.diagonal(i)
+    def self.diagonal(i, j=nil, k=nil)
       Matrix3D.new(
         Vector3D.new(i, 0, 0),
-        Vector3D.new(0, i, 0),
-        Vector3D.new(0, 0, i)
+        Vector3D.new(0, j||i, 0),
+        Vector3D.new(0, 0, k||i)
       )
     end
 
