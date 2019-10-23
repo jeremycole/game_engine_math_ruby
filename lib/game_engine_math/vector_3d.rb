@@ -141,8 +141,28 @@ module GameEngineMath
       result
     end
 
+    def reflect(v)
+      reject(v) - project(v)
+    end
+
+    def involute(v)
+      project(v) - reject(v)
+    end
+
+    def scale(x, y=nil, z=nil)
+      Matrix3D::diagonal(x, y, z) * self
+    end
+
+    def skew(angle, a, b)
+      self + a.normalize * (b.normalize.dot(self)) * Math.tan(angle)
+    end
+
     def zero?
       x.zero? && y.zero? && z.zero?
     end
+
+    X = Vector3D.new(1, 0, 0)
+    Y = Vector3D.new(0, 1, 0)
+    Z = Vector3D.new(0, 0, 1)
   end
 end
