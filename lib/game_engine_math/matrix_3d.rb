@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module GameEngineMath
   class Matrix3D
     attr_accessor :a, :b, :c
 
-    def self.from_h(a:Vector3D.new, b:Vector3D.new, c:Vector3D.new)
+    def self.from_h(a: Vector3D.new, b: Vector3D.new, c: Vector3D.new)
       a = Vector3D.from_h(a) if a.is_a?(Hash)
       b = Vector3D.from_h(b) if b.is_a?(Hash)
       c = Vector3D.from_h(c) if c.is_a?(Hash)
@@ -18,15 +20,15 @@ module GameEngineMath
       )
     end
 
-    def self.diagonal(i, j=nil, k=nil)
+    def self.diagonal(i, j = nil, k = nil)
       Matrix3D.new(
         Vector3D.new(i, 0, 0),
-        Vector3D.new(0, j||i, 0),
-        Vector3D.new(0, 0, k||i)
+        Vector3D.new(0, j || i, 0),
+        Vector3D.new(0, 0, k || i)
       )
     end
 
-    def initialize(a=Vector3D.new, b=Vector3D.new, c=Vector3D.new)
+    def initialize(a = Vector3D.new, b = Vector3D.new, c = Vector3D.new)
       self.a = a
       self.b = b
       self.c = c
@@ -89,12 +91,12 @@ module GameEngineMath
       case o
       when Matrix3D
         Matrix3D.new(
-          Vector3D.new(a.x+o.a.x, a.y+o.a.y, a.z+o.a.z),
-          Vector3D.new(b.x+o.b.x, b.y+o.b.y, b.z+o.b.z),
-          Vector3D.new(c.x+o.c.x, c.y+o.c.y, c.z+o.c.z)
+          Vector3D.new(a.x + o.a.x, a.y + o.a.y, a.z + o.a.z),
+          Vector3D.new(b.x + o.b.x, b.y + o.b.y, b.z + o.b.z),
+          Vector3D.new(c.x + o.c.x, c.y + o.c.y, c.z + o.c.z)
         )
       else
-        raise ArgumentError.new("Unknown type #{o.class} applying + to #{self}")
+        raise ArgumentError, "Unknown type #{o.class} applying + to #{self}"
       end
     end
 
@@ -102,15 +104,14 @@ module GameEngineMath
       case o
       when Matrix3D
         Matrix3D.new(
-          Vector3D.new(a.x-o.a.x, a.y-o.a.y, a.z-o.a.z),
-          Vector3D.new(b.x-o.b.x, b.y-o.b.y, b.z-o.b.z),
-          Vector3D.new(c.x-o.c.x, c.y-o.c.y, c.z-o.c.z)
+          Vector3D.new(a.x - o.a.x, a.y - o.a.y, a.z - o.a.z),
+          Vector3D.new(b.x - o.b.x, b.y - o.b.y, b.z - o.b.z),
+          Vector3D.new(c.x - o.c.x, c.y - o.c.y, c.z - o.c.z)
         )
       else
-        raise ArgumentError.new("Unknown type #{o.class} applying - to #{self}")
+        raise ArgumentError, "Unknown type #{o.class} applying - to #{self}"
       end
     end
-
 
     def *(o)
       case o
@@ -125,7 +126,7 @@ module GameEngineMath
           Vector3D.new(x.dot(o.c), y.dot(o.c), z.dot(o.c))
         )
       else
-        raise ArgumentError.new("Unknown type #{o.class} applying * to #{self}")
+        raise ArgumentError, "Unknown type #{o.class} applying * to #{self}"
       end
     end
 
@@ -146,11 +147,11 @@ module GameEngineMath
 
       id = 1r / determinant
 
-      Matrix3D.from_h({
+      Matrix3D.from_h(
         a: { x: yz.x * id, y: yz.y * id, z: yz.z * id },
         b: { x: zx.x * id, y: zx.y * id, z: zx.z * id },
-        c: { x: xy.x * id, y: xy.y * id, z: xy.z * id },
-      })
+        c: { x: xy.x * id, y: xy.y * id, z: xy.z * id }
+      )
     end
 
     def transpose
@@ -181,30 +182,30 @@ module GameEngineMath
 
     IDENTITY = diagonal(1)
 
-    SAMPLE_A = Matrix3D.from_h({
+    SAMPLE_A = Matrix3D.from_h(
       a: { x: 1, y: 2, z: 3 },
       b: { x: 4, y: 5, z: 6 },
       c: { x: 7, y: 2, z: 9 }
-    })
+    )
 
-    SAMPLE_B = Matrix3D.from_h({
+    SAMPLE_B = Matrix3D.from_h(
       a: { x: 1, y: 2, z: 3 },
       b: { x: 3, y: 2, z: 1 },
       c: { x: 1, y: 3, z: 2 }
-    })
+    )
 
     # Symmetric.
-    SAMPLE_C = Matrix3D.from_h({
+    SAMPLE_C = Matrix3D.from_h(
       a: { x: 1, y: 3, z: 1 },
       b: { x: 3, y: 2, z: 3 },
       c: { x: 1, y: 3, z: 2 }
-    })
+    )
 
     # Skew symmetric.
-    SAMPLE_D = Matrix3D.from_h({
-      a: { x: 1,  y: -3, z: 1 },
+    SAMPLE_D = Matrix3D.from_h(
+      a: { x: 1, y: -3, z: 1 },
       b: { x: 3,  y: 2,  z: 5 },
       c: { x: -1, y: -5, z: 2 }
-    })
+    )
   end
 end

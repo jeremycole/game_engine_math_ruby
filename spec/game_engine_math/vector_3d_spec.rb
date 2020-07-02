@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe GameEngineMath::Vector3D do
   it 'exists' do
     expect(Vector3D).to be_an_instance_of Class
@@ -75,11 +77,13 @@ RSpec.describe GameEngineMath::Vector3D do
   it 'can normalize a vector' do
     v = Vector3D.new(1, 2, 3)
 
-    expect(v.normalize).to eq_a_Vector3D(Vector3D.from_h({
-      x: 0.26726124,
-      y: 0.53452248,
-      z: 0.80178373
-    }))
+    expect(v.normalize).to eq_a_Vector3D(
+      Vector3D.from_h(
+        x: 0.26726124,
+        y: 0.53452248,
+        z: 0.80178373
+      )
+    )
   end
 
   it 'can calculate dot product of orthogonal vectors' do
@@ -103,7 +107,7 @@ RSpec.describe GameEngineMath::Vector3D do
     a = Vector3D.new(1, 2, 3)
     b = Vector3D.new(4, 5, 6)
 
-    expect(a.cross(b)).to eq(-b.cross((a)))
+    expect(a.cross(b)).to eq(-b.cross(a))
   end
 
   it 'expresses distributive law' do
@@ -165,7 +169,7 @@ RSpec.describe GameEngineMath::Vector3D do
   it 'can rotate a vector back to itself' do
     a = Vector3D.new(1, 2, 3)
 
-    expect(a.rotate(x: Math::PI*2, y: Math::PI*2, z: Math::PI*2)).to eq_a_Vector3D(a)
+    expect(a.rotate(x: Math::PI * 2, y: Math::PI * 2, z: Math::PI * 2)).to eq_a_Vector3D(a)
   end
 
   it 'can rotate a vector about an arbitrary axis' do

@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 module GameEngineMath
   class Quaternion
     attr_accessor :x, :y, :z, :w
 
-    def self.from_h(x:'0', y:'0', z:'0', w:'0')
+    def self.from_h(x: '0', y: '0', z: '0', w: '0')
       Quaternion.new(x, y, z, w)
     end
 
-    def self.from_vector(v, w=0)
+    def self.from_vector(v, w = 0)
       Quaternion.new(v.x, v.y, v.z, w)
     end
 
@@ -14,7 +16,7 @@ module GameEngineMath
       from_vector(axis * Math.sin(angle / 2.0), Math.cos(angle / 2.0))
     end
 
-    def initialize(x='0', y='0', z='0', w='0')
+    def initialize(x = '0', y = '0', z = '0', w = '0')
       self.x = Rational(x)
       self.y = Rational(y)
       self.z = Rational(z)
@@ -36,7 +38,7 @@ module GameEngineMath
     end
 
     def to_h
-      {x: x, y: y, z: z, w: w}
+      { x: x, y: y, z: z, w: w }
     end
 
     def ==(o)
@@ -78,7 +80,7 @@ module GameEngineMath
       when Quaternion
         Quaternion.new(x + o.x, y + o.y, z + o.z, w + o.w)
       else
-        raise ArgumentError.new("Unknown type #{o.class} applying + to #{self}")
+        raise ArgumentError, "Unknown type #{o.class} applying + to #{self}"
       end
     end
 
@@ -93,10 +95,10 @@ module GameEngineMath
           w * o.x + x * o.w + y * o.z - z * o.y,
           w * o.y - x * o.z + y * o.w + z * o.x,
           w * o.z + x * o.y - y * o.x + z * o.w,
-          w * o.w - x * o.x - y * o.y - z * o.z,
+          w * o.w - x * o.x - y * o.y - z * o.z
         )
       else
-        raise ArgumentError.new("Unknown type #{o.class} applying * to #{self}")
+        raise ArgumentError, "Unknown type #{o.class} applying * to #{self}"
       end
     end
 
@@ -105,7 +107,7 @@ module GameEngineMath
       when Integer, Float, Rational
         Quaternion.new(x / o, y / o, z / o, w / o)
       else
-        raise ArgumentError.new("Unknown type #{o.class} applying / to #{self}")
+        raise ArgumentError, "Unknown type #{o.class} applying / to #{self}"
       end
     end
 

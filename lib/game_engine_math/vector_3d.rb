@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 module GameEngineMath
   class Vector3D
     attr_accessor :x, :y, :z
 
-    def self.from_h(x:'0', y:'0', z:'0')
+    def self.from_h(x: '0', y: '0', z: '0')
       Vector3D.new(x, y, z)
     end
 
-    def initialize(x='0', y='0', z='0')
+    def initialize(x = '0', y = '0', z = '0')
       self.x = Rational(x)
       self.y = Rational(y)
       self.z = Rational(z)
@@ -26,14 +28,14 @@ module GameEngineMath
     end
 
     def to_h
-      {x: x, y: y, z: z}
+      { x: x, y: y, z: z }
     end
 
     def ==(o)
       x == o.x && y == o.y && z == o.z
     end
 
-    def send_componentwise(op, xx, yy=nil, zz=nil)
+    def send_componentwise(op, xx, yy = nil, zz = nil)
       Vector3D.new(x.send(op, xx), y.send(op, yy || xx), z.send(op, zz || xx))
     end
 
@@ -44,7 +46,7 @@ module GameEngineMath
       when Vector3D
         send_componentwise(op, o.x, o.y, o.z)
       else
-        raise ArgumentError.new("Unknown type #{o.class} applying #{op} to #{self}")
+        raise ArgumentError, "Unknown type #{o.class} applying #{op} to #{self}"
       end
     end
 
@@ -91,7 +93,7 @@ module GameEngineMath
     end
 
     def project(v)
-      v * (dot(v) / v.square);
+      v * (dot(v) / v.square)
     end
 
     def reject(v)
@@ -101,7 +103,7 @@ module GameEngineMath
     def self.rotate_around_axis(axis, angle)
       case axis
       when Symbol
-        raise ArgumentError.new("Unknown axis #{axis}") unless [:x, :y, :z].include?(axis)
+        raise ArgumentError, "Unknown axis #{axis}" unless %i[x y z].include?(axis)
 
         axis = Vector3D.from_h({ axis => 1 })
       when Hash
@@ -109,7 +111,7 @@ module GameEngineMath
       when Vector3D
         axis = axis.normalize
       else
-        raise ArgumentError.new("Unknown axis type #{axis.class}")
+        raise ArgumentError, "Unknown axis type #{axis.class}"
       end
 
       cos = Math.cos(angle)
@@ -124,18 +126,18 @@ module GameEngineMath
       axaz = rx * axis.z
       ayaz = ry * axis.z
 
-      Matrix3D.from_h({
-        a: { x:  cos +  rx * axis.x, y: axay - sin * axis.z, z: axaz + sin * axis.y },
-        b: { x: axay + sin * axis.z, y:  cos +  ry * axis.y, z: ayaz - sin * axis.x },
-        c: { x: axaz - sin * axis.y, y: ayaz + sin * axis.x, z:  cos +  rz * axis.z }
-      })
+      Matrix3D.from_h(
+        a: { x: cos + rx * axis.x, y: axay - sin * axis.z, z: axaz + sin * axis.y },
+        b: { x: axay + sin * axis.z, y: cos + ry * axis.y, z: ayaz - sin * axis.x },
+        c: { x: axaz - sin * axis.y, y: ayaz + sin * axis.x, z: cos + rz * axis.z }
+      )
     end
 
     def rotate(rotations)
       result = self
 
       rotations.each do |axis, angle|
-        result = Vector3D::rotate_around_axis(axis, angle) * result
+        result = Vector3D.rotate_around_axis(axis, angle) * result
       end
 
       result
@@ -149,12 +151,12 @@ module GameEngineMath
       project(v) - reject(v)
     end
 
-    def scale(x, y=nil, z=nil)
-      Matrix3D::diagonal(x, y, z) * self
+    def scale(x, y = nil, z = nil)
+      Matrix3D.diagonal(x, y, z) * self
     end
 
     def skew(angle, a, b)
-      self + a.normalize * (b.normalize.dot(self)) * Math.tan(angle)
+      self + a.normalize * b.normalize.dot(self) * Math.tan(angle)
     end
 
     def zero?

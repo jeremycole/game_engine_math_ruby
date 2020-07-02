@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe GameEngineMath::Quaternion do
   it 'exists' do
     expect(Quaternion).to be_an_instance_of Class

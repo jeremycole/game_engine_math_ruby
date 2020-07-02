@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module GameEngineMath
   class Point3D < Vector3D
     def distance(other)
@@ -5,7 +7,7 @@ module GameEngineMath
       when Line3D
         other.distance(self)
       else
-        raise ArgumentError.new("Unknown object type #{other.class}")
+        raise ArgumentError, "Unknown object type #{other.class}"
       end
     end
   end

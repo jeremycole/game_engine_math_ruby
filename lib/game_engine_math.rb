@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module GameEngineMath; end
 
 require 'game_engine_math/version'
@@ -7,4 +9,4 @@ require 'game_engine_math/line_3d'
 require 'game_engine_math/matrix_3d'
 require 'game_engine_math/quaternion'
 
-include GameEngineMath
+include GameEngineMath # rubocop:disable Style/MixinUsage

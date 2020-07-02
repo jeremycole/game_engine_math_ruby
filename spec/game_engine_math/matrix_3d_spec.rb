@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe GameEngineMath::Matrix3D do
   it 'exists' do
     expect(Matrix3D).to be_an_instance_of Class
@@ -23,11 +25,11 @@ RSpec.describe GameEngineMath::Matrix3D do
   end
 
   it 'can instantiate an object using from_h' do
-    m = Matrix3D.from_h({
+    m = Matrix3D.from_h(
       a: { x: 1, y: 2, z: 3 },
       b: { x: 4, y: 5, z: 6 },
       c: { x: 7, y: 8, z: 9 }
-    })
+    )
 
     expect(m.a.x).to eq(1)
     expect(m.a.y).to eq(2)
@@ -49,11 +51,13 @@ RSpec.describe GameEngineMath::Matrix3D do
   end
 
   it 'can perform matrix multiplication' do
-    expect(Matrix3D::SAMPLE_A * Matrix3D::SAMPLE_B).to eq(Matrix3D.from_h({
-      a: { x: 30, y: 18, z: 42},
-      b: { x: 18, y: 18, z: 30},
-      c: { x: 27, y: 21, z: 39},
-    }))
+    expect(Matrix3D::SAMPLE_A * Matrix3D::SAMPLE_B).to eq(
+      Matrix3D.from_h(
+        a: { x: 30, y: 18, z: 42 },
+        b: { x: 18, y: 18, z: 30 },
+        c: { x: 27, y: 21, z: 39 }
+      )
+    )
   end
 
   it 'can calculate the determinant' do
@@ -61,11 +65,13 @@ RSpec.describe GameEngineMath::Matrix3D do
   end
 
   it 'can invert a matrix' do
-    expect(Matrix3D::SAMPLE_A.inverse).to eq(Matrix3D.from_h({
-      a: { x: -11/12r, y: 1/3r,  z: 1/12r },
-      b: { x: -1/6r,   y: 1/3r,  z: -1/6r },
-      c: { x: 3/4r,    y: -1/3r, z: 1/12r },
-    }))
+    expect(Matrix3D::SAMPLE_A.inverse).to eq(
+      Matrix3D.from_h(
+        a: { x: -11/12r, y: 1/3r, z: 1/12r },
+        b: { x: -1/6r,   y: 1/3r,  z: -1/6r },
+        c: { x: 3/4r,    y: -1/3r, z: 1/12r }
+      )
+    )
   end
 
   it 'expresses the determinant of the identity' do
@@ -84,9 +90,9 @@ RSpec.describe GameEngineMath::Matrix3D do
 
   it 'expresses scalar factorization for the determinant' do
     expect((Matrix3D::SAMPLE_A * 7r).determinant)
-      .to be_close_to((7r ** 3) * Matrix3D::SAMPLE_A.determinant)
+      .to be_close_to((7r**3) * Matrix3D::SAMPLE_A.determinant)
     expect((Matrix3D::SAMPLE_B * 2r).determinant)
-      .to be_close_to((2r ** 3) * Matrix3D::SAMPLE_B.determinant)
+      .to be_close_to((2r**3) * Matrix3D::SAMPLE_B.determinant)
   end
 
   it 'expresses transpose symmetry for the determinant' do

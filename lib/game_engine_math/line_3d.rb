@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module GameEngineMath
   class Line3D
     attr_accessor :p, :v
@@ -20,7 +22,7 @@ module GameEngineMath
 
       det = v1v2 * v1v2 - v12 * v22
 
-      if det.abs == 0
+      if det.abs.zero?
         a = dp.cross(l1.v)
         return Math.sqrt(a.dot(a) / v12)
       end
@@ -42,7 +44,7 @@ module GameEngineMath
       when Line3D
         Line3D.distance_between_lines(self, other)
       else
-        raise ArgumentError.new("Unknown object type #{other.class}")
+        raise ArgumentError, "Unknown object type #{other.class}"
       end
     end
   end
